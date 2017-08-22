@@ -1,0 +1,17 @@
+{
+  "name": "doc-koa-example",
+  "version": "1.0.0",
+  "description": "koa example",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node index.js --watch controllers --watch ../../src --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1"
+  }
+}

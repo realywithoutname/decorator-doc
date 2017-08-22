@@ -1,0 +1,26 @@
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.operator.decorator.js",
+        "settings": {
+          "foreground": "#ff0000"
+        }
+      },
+      {
+        "name": "class.decorator",
+        "scope": "variable.other.readwrite.decorator.js",
+        "settings": {
+          "foreground": "#89898560"
+        }
+      },
+      {
+        "name": "class.decorator.property",
+        "scope": "variable.other.property.decorator.js",
+        "settings": {
+          "foreground": "#89898560"
+        }
+      }
+    ]
+  }
+}
