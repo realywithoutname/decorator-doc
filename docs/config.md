@@ -15,9 +15,12 @@
 > router 如果不配置该属性，可以在`decorator-doc/swagger-ui`获取UI文件，并配置`/swagger-ui/docs`路由返回swagger文档
 
 ### JavaScript Object
-使用JavaScript对象的方式，主要在不希望使用ES7 decorator语法的项目定义Model以及定义一些公用的Model(不在数据库中，但是常常接口又需要)。
-使用这种方式定义的Model，必须配置`models`属性，在没有配置的项目中工具不会自动去加载这个目录。
-在Model中配置的其他信息，工具不会使用也不会修改。
+使用JavaScript对象的方式，主要在不希望使用ES7 decorator语法的项目定义Model以及定义一些公用的Model(不在数据库中，但是常常接口又需要)。  
+
+使用这种方式定义的Model，必须配置`models`属性，在没有配置的项目中工具不会自动去加载这个目录。  
+
+在Model中配置的其他信息，工具不会使用也不会修改。  
+
 使用这种方式配置的Model将会在controller目录下查找同名的文件作为controller，并在controller中查找同名的处理函数(如果controller export一个class或者function，将使用new创建新实例进行查找)
 ~~~ JavaScript
 {
