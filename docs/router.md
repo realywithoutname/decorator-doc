@@ -81,6 +81,6 @@
     ~~~
 > 如果在属性集合中找不到对应属性将会导致错误
 
-### <a name="router-deprecated"></a> router.deprecated(Boolean: deprecated)
+### <a name="router-deprecated"></a> router.deprecated(Boolean: deprecated)  `3.0`
 - `optional` 定义API是否废弃，默认为`false`
   - deprecated `optional` 默认值为`true`
