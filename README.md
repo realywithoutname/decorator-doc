@@ -116,29 +116,39 @@
 - [schema](/doc/schema.md)
 
 ## FEATURE
-- router.join 该方法不能满足一下需求
+- router.join 该方法不能满足一下需求  
 期望
-~~~ json
+~~~ javascript
 {
   id: "model id",
   list: [
     {
-      id: "other id"
+      id: "other id",
+      name: "other name"
     }
   ]
 }
 ~~~
 因为在join的时候不能在同一个Model拥有相同的属性，所以这里定义时必须使用别名
 ~~~
-@router.join('othor', ['id as otherId'])
+@router.join('othor', ['id as otherId', 'name'])
+@router.response([
+  id,
+  {
+    name: "list",
+    description: "list",
+    props: ['otherId', 'name']
+  }
+])
 ~~~
 上面的结果就会是
-~~~ json
+~~~ javascript
 {
   id: "model id",
   list: [
     {
-      otherId: "other id"
+      otherId: "other id",
+      name: "other name"
     }
   ]
 }
