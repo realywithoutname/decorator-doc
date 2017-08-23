@@ -118,7 +118,7 @@
 ## FEATURE
 - router.join 该方法不能满足一下需求
 期望
-~~~ json
+~~~ javascript
 {
   id: "model id",
   list: [
@@ -133,7 +133,7 @@
 @router.join('othor', ['id as otherId'])
 ~~~
 上面的结果就会是
-~~~ json
+~~~ javascript
 {
   id: "model id",
   list: [
