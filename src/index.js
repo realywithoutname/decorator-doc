@@ -21,7 +21,7 @@ function generator(config = {}) {
     return instance
   }
   config.use = config.use || 2
-  config.root = process.cwd()
+  config.root = config.root || process.cwd()
   config = get(config)
 
   const Builder = require('./builder/v' + config.use)

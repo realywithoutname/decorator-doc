@@ -67,7 +67,7 @@ router.required = function (props) {
   return setValue({ required: props })
 }
 
-router.deprecated = function (deprecated = false) {
+router.deprecated = function (deprecated = true) {
   return setValue({ deprecated })
 }
 router.response = function (props) {

@@ -23,7 +23,12 @@ module.exports = {
           'prop1',
           'prop2',
           'prop3',
-          'created'
+          'created',
+          {
+            name: 'list',
+            type: 'array',
+            props: ['id']
+          }
         ]
       }
     }

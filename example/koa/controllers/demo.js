@@ -16,7 +16,11 @@ class Demo {
 
   @router('Update Demo document by id')
   @router.put('/Demos/{id}')
-  @router.body(['name'])
+  @router.body(['name', {
+    name: 'examples',
+    type: 'array',
+    props: ['id', 'name']
+  }])
   @router.response(['id'])
   update() {
 

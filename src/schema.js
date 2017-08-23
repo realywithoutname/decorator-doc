@@ -3,6 +3,7 @@ const { format } = require('./meta')
 class Schema {
   constructor(description) {
     this.description = description
+    this.type = 'string'
   }
   title(title) {
     this.title = title

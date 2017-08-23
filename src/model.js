@@ -2,10 +2,10 @@ const schemas = require('./meta/schemas')
 const _ = require('lodash')
 const { isError, merge } = require('./helper')
 
-let model = function (description) {
+let model = function (description, name) {
   return (target) => {
     let schema = target.swagger$$schema
-    schema.name = _.capitalize(target.name)
+    schema.name = _.capitalize(name || target.name)
     schema.description = description
 
     isError(!schema.name, 'A model without name.')

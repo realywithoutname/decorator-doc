@@ -186,7 +186,6 @@ class Builder {
       })
 
       !schema.required.length && delete schema.required
-
       return parameter
     })
 
@@ -233,6 +232,7 @@ class Builder {
         let schema = props[key]
         isError(!schema, 'Can\'t find ' + item + ' parameter in ' + apiName + '\'s properties.')
         res[key] = schema
+        return res
       }, {})
 
       if (item.type !== 'array') {

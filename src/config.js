@@ -33,7 +33,7 @@ function generateHandles(apis, controller, fileName) {
  * 则通过config组件从项目目录下的获取配置文件server属性的配置信息
  */
 module.exports = function (conf) {
-  conf = Object.assign({}, config.get('server') || {}, conf)
+  conf = Object.assign({}, { host: '127.0.0.1', port: 3000, basePath: '/' }, config.get('server') || {}, conf)
 
   if (_.isString(conf.pkgconf)) {
     try {
