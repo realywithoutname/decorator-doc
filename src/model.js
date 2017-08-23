@@ -1,21 +1,26 @@
-const builder = require('./builder')
+const schemas = require('./meta/schemas')
+const _ = require('lodash')
 const { isError, merge } = require('./helper')
 
 let model = function (description) {
   return (target) => {
-    let schema = target.schema
-    schema.name = target.name
+    let schema = target.swagger$$schema
+    schema.name = _.capitalize(target.name)
     schema.description = description
 
     isError(!schema.name, 'A model without name.')
 
-    builder.schemas.push(schema)
+    schemas.push(schema)
+    Object.defineProperty(target, 'schema', {
+      enumerable: false,
+      value: schema
+    })
   }
 }
 
 model.props = function (props) {
   return (target) => {
-    merge(target, 'schema.properties', props)
+    merge(target, 'swagger$$schema.properties', props)
   }
 }
 

@@ -1,7 +1,7 @@
 {
   "name": "decorator-doc",
   "version": "1.0.0",
-  "description": "A swagger doc generator with decorator syntax for node.js.",
+  "description": "A swagger doc generator with decorator syntax for node.js,It surport use a js object define too.",
   "main": "src/index.js",
   "directories": {
     "example": "example"
@@ -18,17 +18,12 @@
   ],
   "author": "liuJD",
   "license": "ISC",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-decorators": "^6.24.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "lodash": "^4.17.4"
-  },
   "dependencies": {
+    "lodash": "^4.17.4",
     "config": "^1.26.2",
-    "joi": "^10.6.0",
+    "koa-static": "^4.0.1",
     "merge": "^1.2.0",
+    "require-dir": "^0.3.2",
     "swagger-parser": "^3.4.2",
     "swagger-ui": "^3.1.6"
   }

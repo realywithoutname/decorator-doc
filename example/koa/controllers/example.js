@@ -20,7 +20,7 @@ class Example {
       'size'
     ]
   )
-
+  @router.required(['id', 'name'])
   find(req, res) {
 
   }

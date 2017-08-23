@@ -1,6 +1,8 @@
+const path = require('path')
 module.exports = {
   server: {
-    host: '127.0.0.1',
-    port: 3001
+    host: 'localhost',
+    port: 3001,
+    models: path.resolve(__dirname, '../models')
   }
 }

@@ -65,7 +65,13 @@ module.exports.response = {
 
 module.exports.item = module.exports.header = module.exports.parameter
 
+
+function check() {
+
+}
+
 Object.keys(meta).forEach(key => {
-  let _meta = module.exports[key]
-  module.exports[key] = Object.assign({}, _meta, meta[key])
+  let _meta = Object.assign({}, mata[key], module.exports[key])
+  _meta.check = check.bind(_meta)
+  module.exports[key] = _meta
 })

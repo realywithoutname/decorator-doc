@@ -55,6 +55,10 @@ module.exports.merge = function (source, target, val) {
   return _.get(source, target)
 }
 
-module.exports.isError = function (express, message) {
-  if (express) throw new Error(message)
+module.exports.isError = function (expression, message) {
+  if (expression) throw new Error(message)
+}
+
+module.exports.isWarning = function (expression, message) {
+  expression && console.log(message)
 }

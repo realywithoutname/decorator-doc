@@ -23,7 +23,7 @@ function setValue(arg) {
   isError(!_.isPlainObject(arg), 'First argument must be object')
 
   return (target, key, descritor) => {
-    merge(target.constructor, `schema.apis.${key}`, arg)
+    merge(target.constructor, `swagger$$schema.apis.${key}`, arg)
   }
 }
 
@@ -46,6 +46,7 @@ router.join = function (refModelName, props) {
 
   if (_.isString(refModelName)) {
     let _props = {}
+    _.capitalize(refModelName)
     for (let prop of props) {
       let test = prop.match(/(\w+)\s+as\s+(\w+)/)
       if (test) {
@@ -66,6 +67,9 @@ router.required = function (props) {
   return setValue({ required: props })
 }
 
+router.deprecated = function (deprecated = false) {
+  return setValue({ deprecated })
+}
 router.response = function (props) {
   return setValue({ response: { type: 'object', props } })
 }

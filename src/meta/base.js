@@ -107,5 +107,3 @@ module.exports.schema = {
   externalDocs: {},
   example: {}
 }
-
-module.exports.schemas = []
