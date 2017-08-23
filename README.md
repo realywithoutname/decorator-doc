@@ -139,7 +139,7 @@
     description: "list",
     props: ['otherId', 'name']
   }
-]})
+])
 ~~~
 上面的结果就会是
 ~~~ javascript
