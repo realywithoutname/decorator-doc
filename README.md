@@ -17,7 +17,7 @@
 - [info](/docs/info.md)
 - [schema](/doc/schema.md)
 
-## [FEATURE]
+## FEATURE
 
 [这里](/docs/feature.md)查看
 
