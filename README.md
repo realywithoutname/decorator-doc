@@ -19,7 +19,7 @@
 
 ## [FEATURE]
 
-[这里]查看(/docs/feature.md)
+[这里](/docs/feature.md)查看
 
 ## IMPORTANT CHANGE LOG
 
