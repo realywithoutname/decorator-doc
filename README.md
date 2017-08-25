@@ -7,7 +7,7 @@
 支持两种配置方式：使用ES7 decorator或使用普通JavaScript对象。
 
 ## USE
-还没有发布到npm（捂脸），假设这个工具叫`decorator-doc`
+
 
 ### INSTALL
 在你的项目中安装它
@@ -16,6 +16,7 @@
 ~~~
 ### RUN
 在你的项目中使用它
+
 如果使用ES7 decorator语法，你还需要安装Babel插件。使用JavaScript对象定义请参照[这里](/docs/config.md)
 ~~~
   $ babel-plugin-transform-decorators-legacy
