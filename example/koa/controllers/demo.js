@@ -1,10 +1,9 @@
-const { model, schema, router } = require('../../../src')
-
+const { model, info, router } = require('../../../src')
 @model('Demo model')
 @model.props({
-  id: schema('Demo Id').integer('integer').required(),
-  name: schema('Demo name').string('string').required(),
-  createTime: schema('Demo create time').dateTime()
+  id: info.integer().desc('Demo Id').required(),
+  name: info.string().desc('Demo name').required(),
+  createTime: info.dateTime().desc('Demo create time')
 })
 class Demo {
   @router('Demo find')

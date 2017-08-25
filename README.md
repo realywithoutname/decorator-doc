@@ -32,13 +32,13 @@
 
 - controller
   ~~~ JavaScript
-    const { model, schema, router } = require('decorator-doc')
+    const { model, info, router } = require('decorator-doc')
 
     @model('Demo model')
     @model.props({
-      id: schema('Demo Id').integer('integer').required(),
-      name: schema('Demo name').string('string').required(),
-      createTime: schema('Demo create time').dateTime()
+      id: info.integer('integer').required().desc('Demo Id'),
+      name: info.string('string').required().desc('Demo name'),
+      createTime: info.dateTime().desc('Demo create time')
     })
     class Demo {
       @router('Demo find')
@@ -113,10 +113,13 @@
 - [config](/docs/config.md)
 - [model](/docs/model.md)
 - [router](/docs/router.md)
+- [info](/docs/info.md)
 - [schema](/doc/schema.md)
 
 ## FEATURE
-- router.join 该方法不能满足一下需求  
+- 希望内部支持所有的`node.js`框架的路由
+
+- router.join 该方法不能满足一下需求
 期望
 ~~~ javascript
 {
@@ -153,3 +156,9 @@
   ]
 }
 ~~~
+
+## IMPORTANT CHANGE LOG
+
+- [commit cf473c8c85b1fd06df662011a7074b5326aaaef1](/commit/cf473c8c85b1fd06df662011a7074b5326aaaef1)
+  支持Swagger 2.0(`验证通过`)和Swagger 3.0(未验证)文档生成
+

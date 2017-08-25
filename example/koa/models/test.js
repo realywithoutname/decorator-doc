@@ -1,14 +1,14 @@
-const { schema } = require('../../../src')
+const { info } = require('../../../src')
 module.exports = {
   name: 'Test',
   description: 'Test Model',
   properties: {
-    id: schema('test id').integer().required(),
-    prop1: schema('test property one').string(),
-    prop2: schema('test property two').string(),
-    prop3: schema('test property three').string(),
-    prop4: schema('test property four').string(),
-    created: schema('test property four').dateTime()
+    id: info.integer().desc('test id').required(),
+    prop1: info.string().desc('test property one'),
+    prop2: info.string().desc('test property two'),
+    prop3: info.string().desc('test property three'),
+    prop4: info.string().desc('test property four'),
+    created: info.dateTime().desc('test property four')
   },
   apis: {
     find: {

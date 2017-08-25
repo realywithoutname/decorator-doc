@@ -2,6 +2,7 @@ const model = require('./model')
 const schema = require('./schema')
 const router = require('./router')
 const get = require('./config')
+const types = require('./types')
 const path = require('path')
 const serverStatic = require('koa-static')
 let instance = null
@@ -52,6 +53,8 @@ function generator(config = {}) {
 generator.model = model
 
 generator.schema = schema
+
+generator.info = types
 
 generator.router = router
 

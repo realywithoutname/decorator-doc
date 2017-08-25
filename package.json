@@ -18,6 +18,10 @@
   ],
   "author": "liuJD",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realywithoutname/decorator-doc"
+  },
   "dependencies": {
     "lodash": "^4.17.4",
     "config": "^1.26.2",

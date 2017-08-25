@@ -1,5 +1,6 @@
 const joi = require('joi')
-const { format } = require('./meta')
+const { isError } = require('./helper')
+const { format } = require('./meta/base')
 class Schema {
   constructor(description) {
     this.description = description
@@ -67,6 +68,12 @@ class Schema {
   }
   enum($enum) {
     this.enum = $enum
+    return this
+  }
+  setType(type) {
+    isError(!format[type], 'Invaild type.')
+    this.format = type
+    this.type = format[type]
     return this
   }
   integer() {
@@ -152,7 +159,7 @@ class Schema {
     this.additionalProperties = additionalProperties
     return this
   }
-  description(description) {
+  desc(description) {
     this.description = description
     return this
   }
