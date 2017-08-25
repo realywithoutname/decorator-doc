@@ -17,7 +17,9 @@
 - [info](/docs/info.md)
 - [schema](/doc/schema.md)
 
-## [FEATURE](/docs/feature.md)
+## [FEATURE]
+
+[这里]查看(/docs/feature.md)
 
 ## IMPORTANT CHANGE LOG
 
