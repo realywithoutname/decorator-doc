@@ -10,7 +10,7 @@ class Demo {
   @router.get('/Demos')
   @router.response.array()
   find(req, res) {
-
+    return [{ id: 0 }]
   }
 
   @router('Update Demo document by id')

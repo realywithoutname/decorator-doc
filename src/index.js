@@ -4,7 +4,7 @@ const router = require('./router')
 const get = require('./config')
 const types = require('./types')
 const path = require('path')
-const serverStatic = require('koa-static')
+const serverStatic = require('./static')
 let instance = null
 /**
  *
@@ -34,8 +34,13 @@ function generator(config = {}) {
   // 如果有router参数，则自动配置路由
   if (router) {
 
-    router.get('/swagger-ui/docs', function (ctx) {
-      ctx.body = instance
+    router.get('/swagger-ui/docs', function () {
+      if (arguments.length === 3) {
+        return arguments[1].send(instance)
+      }
+
+      let self = this === global ? arguments[0] : this
+      self.body = instance
     })
 
     router.get('/swagger-ui*', serverStatic(path.join(__dirname, '../')))

@@ -30,3 +30,7 @@
   - 修复删除`src/meta.js`的bug
   - 新增[info](/docs/info.md)API
   - 修改[schema](/docs/schema.md)对象
+
+- [commit ef92a3b85b9d022ab51124aa2faa72ee8ab2295d](/commit/ef92a3b85b9d022ab51124aa2faa72ee8ab2295d)
+  - 支持多种框架，通过`express`,`koa 1.x`,`koa 2.x`
+  - `koa 1.x`中controller中同时使用`Generator`和`Decorator`会出错，待解决。
