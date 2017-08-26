@@ -31,6 +31,6 @@
   - 新增[info](/docs/info.md)API
   - 修改[schema](/docs/schema.md)对象
 
-- [commit ef92a3b85b9d022ab51124aa2faa72ee8ab2295d](/commit/ef92a3b85b9d022ab51124aa2faa72ee8ab2295d)
+- [commit 335da731f461e0732dfb4e8c71fb7aa7dd6890ec](/commit/335da731f461e0732dfb4e8c71fb7aa7dd6890ec)
   - 支持多种框架，通过`express`,`koa 1.x`,`koa 2.x`
   - `koa 1.x`中controller中同时使用`Generator`和`Decorator`会出错，待解决。
