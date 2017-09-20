@@ -35,3 +35,8 @@
 - [commit 335da731f461e0732dfb4e8c71fb7aa7dd6890ec](/commit/335da731f461e0732dfb4e8c71fb7aa7dd6890ec)
   - 支持多种框架，通过`express`,`koa 1.x`,`koa 2.x`
   - `koa 1.x`中controller中同时使用`Generator`和`Decorator`会出错，待解决。
+
+- [commit 37bc6eda17025ee2ebb71d3cd21def3e60c53097](/commit/37bc6eda17025ee2ebb71d3cd21def3e60c53097)
+  - 支持接口验证，不包括返回数据验证。
+  - 删除Schema相关接口。（示例未同步）
+  - 添加router.body.array方法，具体请查看[文档](/docs/router.md)
