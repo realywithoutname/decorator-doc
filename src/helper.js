@@ -62,3 +62,19 @@ module.exports.isError = function (expression, message) {
 module.exports.isWarning = function (expression, message) {
   expression && console.log(message)
 }
+
+module.exports.isKoa = function (caller, args) {
+  let ctx = caller === global ? args[0] : caller
+  let { res, req } = ctx
+  let isKoa = true
+
+  if (args.length > 2) {
+    req = args[0]
+    res = args[1]
+    isKoa = false
+  }
+
+  module.exports.isError(res.constructor.name !== 'ServerResponse' || req.constructor.name === 'ServerRequest', 'Invaild Request.')
+
+  return isKoa
+}

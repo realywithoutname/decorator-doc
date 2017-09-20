@@ -1,4 +1,5 @@
-### <a name="Schema">Schema</a>
+### <a name="Schema">Schema`废弃`</a>
+
 Schema 中方法与swagger文档对应，其中设置数据类型的方法为swagger所支持的数据类型。详细信息可见文档，其中标注3.0的表示2.0不支持。
 > 见[swagger 2.0](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md),[swagger 3.0](https://swagger.io/specification/#schemaObject)
 

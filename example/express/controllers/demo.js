@@ -1,13 +1,15 @@
-const { model, info, router } = require('../../../src')
+const { model, router } = require('../../../src')
+const Joi = require('joi')
 @model('Demo model')
 @model.props({
-  id: info.integer().desc('Demo Id').required(),
-  name: info.string().desc('Demo name').required(),
-  createTime: info.dateTime().desc('Demo create time')
+  id: Joi.number().description('Demo Id').required(),
+  name: Joi.string().description('Demo name').required(),
+  createTime: Joi.date().description('Demo create time')
 })
 class Demo {
   @router('Demo find')
   @router.get('/Demos')
+  @router.required(['id'])
   @router.response.array()
   find(req, res) {
     res.send([{ id: 0 }])

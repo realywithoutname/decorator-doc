@@ -46,6 +46,8 @@ class Builder extends BaseBuilder {
       if (param.in !== 'body') {
         _param = Object.assign({}, param.schema, param)
         delete _param.schema
+      } else {
+        delete param.schema['x-schema']
       }
 
       return _param

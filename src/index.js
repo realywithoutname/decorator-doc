@@ -1,10 +1,9 @@
 const model = require('./model')
-const schema = require('./schema')
 const router = require('./router')
 const get = require('./config')
-const types = require('./types')
 const path = require('path')
 const serverStatic = require('./static')
+const validate = require('./validate')
 let instance = null
 /**
  *
@@ -44,11 +43,11 @@ function generator(config = {}) {
     })
 
     router.get('/swagger-ui*', serverStatic(path.join(__dirname, '../')))
-
     Object.keys(routes).forEach(url => {
-      let route = routes[url]
+      let {method, controller, target} = routes[url]
+      let swagger = instance.paths[url][method]
       url = path.join(config.basePath + '/' + url).replace(/\{\s*(\w+)?\s*\}/g, ($1, $2) => ':' + $2).replace(/\\/g, '/')
-      router[route.method](url, route.action)
+      router[method](url, validate(swagger, controller))
     })
   }
 
@@ -56,10 +55,6 @@ function generator(config = {}) {
 }
 
 generator.model = model
-
-generator.schema = schema
-
-generator.info = types
 
 generator.router = router
 

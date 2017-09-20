@@ -15,7 +15,8 @@
 - [model](/docs/model.md)
 - [router](/docs/router.md)
 - [info](/docs/info.md)
-- [schema](/doc/schema.md)
+- [schema](/doc/schema.md)`废弃`
+> 原Schema的所有功能已使用[Joi](https://github.com/hapijs/joi)替代，使用方法请查看[Joi文档](https://github.com/hapijs/joi/blob/v11.0.2/API.md)
 
 ## FEATURE
 

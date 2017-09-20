@@ -1,16 +1,17 @@
-const { model, schema, router } = require('../../../src')
+const { model, router } = require('../../../src')
+const Joi = require('joi')
 @model('Example model')
 @model.props({
-  id: schema('Example Id').integer('integer').required(),
-  name: schema('Example name').string('string').required()
+  id: Joi.number().description('Example Id').integer().required(),
+  name: Joi.string().description('Example name').required()
 })
 class Example {
   @router({ query: [] })
   @router.get('/examples')
   @router.response.array()
   @router.join({
-    page: schema('Page index').integer(),
-    size: schema('Page size').integer()
+    page: Joi.number().description('Page index').integer(),
+    size: Joi.number().description('Page size').integer()
   })
   @router.query(
     [

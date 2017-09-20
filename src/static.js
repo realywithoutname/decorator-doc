@@ -1,19 +1,17 @@
-const { isError } = require('./helper')
+const { isError, isKoa } = require('./helper')
 const co = require('co')
 const { join, basename, extname } = require('path')
 const fs = require('fs')
 module.exports = function (root) {
   return function () {
+    let _isKoa = isKoa(this, arguments)
     let ctx = this === global ? arguments[0] : this
     let { res, req } = ctx
-    let isKoa = true
-    if (arguments.length === 3) {
+
+    if (!_isKoa) {
       req = arguments[0]
       res = arguments[1]
-      isKoa = false
     }
-
-    isError(res.constructor.name !== 'ServerResponse' || req.constructor.name === 'ServerRequest', 'Invaild Request.')
 
     let reqError = function (e) {
       res.statusCode = 500
@@ -57,7 +55,7 @@ module.exports = function (root) {
           res.setHeader('Content-Length', stats.size)
           res.setHeader('Content-Type', types[type] || 'text/plain')
 
-          if (isKoa) {
+          if (_isKoa) {
             ctx.body = fsStream
           } else {
             fsStream.pipe(res)

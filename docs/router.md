@@ -32,13 +32,15 @@
   - props `optional` 该API可接受参数集合，默认为所有该API下的属性集合。
 > 对于在URL中作为`paramter`的参数将自动从URL中解析及属性集合中获取对应的属性，如果在属性集合中找不到对应属性将会导致错误
 ### <a name="router-body"></a> router.body (Array: props)
-- `optional` 定义API可接受的Body参数列表。
+- `optional` 定义API可接受的Body参数列表，body中的数据为JSON对象格式。
   - props `optional` 该API可接受参数集合，默认为所有该API下的属性集合。
     - prop.name `required` 属性名称
     - prop.type `optional` 类型，可以是array 或 object,默认为'object'
     - prop.props `required` 该属性包含拥有属性列表
     - prop.description `optional` 描述信息
 > 对于在URL中作为`paramter`的参数将自动从URL中解析及属性集合中获取对应的属性，如果在属性集合中找不到对应属性将会导致错误
+### <a name="router-body"></a> router.body.array (Array: props)
+- 同上，不同之处在于body中的数据为JSON数组格式。
 
 ### <a name="router-required"></a> router.required (Array: props)
 - `optional` 定义API可接受参数的必须项列表。

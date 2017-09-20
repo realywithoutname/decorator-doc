@@ -21,8 +21,9 @@ class Demo {
     props: ['id', 'name']
   }])
   @router.response(['id'])
-  update() {
-
+  update(ctx) {
+    console.log(ctx.request.body)
+    ctx.body = {}
   }
 }
 

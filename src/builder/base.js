@@ -1,6 +1,7 @@
 const { isError } = require('../helper')
+const convert = require('joi-to-json-schema')
 const _ = require('lodash')
-
+const Joi = require('joi')
 let config = null
 
 class Builder {
@@ -32,9 +33,12 @@ class Builder {
     let required = []
 
     Object.keys(properties).forEach(key => {
-      let schema = properties[key]
-      schema.required && required.push(key)
-      delete schema.required
+      let prop = properties[key]
+      prop.required && required.push(key)
+      let schema = convert(Object.assign({}, prop))
+      schema['x-schema'] = prop.optional()
+      properties[key] = schema
+      delete prop.required
     })
 
     return required.length ? { required, properties } : { properties }
@@ -87,7 +91,6 @@ class Builder {
         let api = _path[method] = {}
         let props = refs ? this.externalProps(name, refs, apiName) : regionProps
         let params = (path.match(/\{\s*(\w+)?\s*\}/g) || []).map(item => item.match(/\{\s*(\w+)?\s*\}/)[1])
-
         /**
          * 根据method处理query，body没有值得情况
          * query 为空
@@ -101,9 +104,9 @@ class Builder {
          */
         if (method === 'post' || method === 'put') {
           query = query || []
-          body = body || Object.keys(regionProps)
+          body = body || { type: 'object', props: Object.keys(regionProps) }
         } else {
-          body = body || []
+          body = body || null
           query = query || Object.keys(props)
         }
 
@@ -142,52 +145,49 @@ class Builder {
           name,
           schema,
           in: _in,
+          'x-schema': schema['x-schema'],
           description: schema.description,
           required: _required ? _required : required.indexOf(name) !== -1
         }
-
         return parameter
       }
     }
     let queryParameters = query.map(setParameter('query'))
     let paramParameters = params.map(setParameter('path', true))
-    let bodyParameters = body.map((item, index) => {
-      if (_.isString(item))
-        return setParameter('body')(item)
 
-      isError(!_.isPlainObject(item), apiName + ' body properties must be string or object.')
+    function parseBody () {
+      function parseObject(item, index = 0, xSchema) {
+        isError(!_.isPlainObject(item), apiName + ' body properties must be string or object.')
 
-      isError(!item.props || !_.isArray(item.props), apiName + ' body item ' + index + 'must have props property, must be array.')
+        isError(!item.props || !_.isArray(item.props), apiName + ' body item ' + index + 'must have props property, must be array.')
+        let itemSchema = Joi.object().keys()
 
-      let schema = { description: item.description, type: item.type }
-      let parameter = {
-        schema,
+        item.props.forEach((item, index) => {
+          if (_.isString(item)) return itemSchema = itemSchema.keys({ [item]: props[item]['x-schema'] })
+          itemSchema = parseObject(item, index, itemSchema)
+        })
+
+        if (item.type === 'array') {
+          xSchema = xSchema ? xSchema.keys({[item.name]: Joi.array().items(itemSchema)}) : Joi.array().items(itemSchema)
+        } else {
+          xSchema = xSchema ? xSchema.keys({[item.name]: itemSchema}) : itemSchema
+        }
+
+        return xSchema
+      }
+
+      let xSchema = parseObject(body)
+      return {
         in: 'body',
-        name: item.name,
-        description: item.description,
-        required: required.indexOf(item.name) !== -1
+        name: 'body',
+        schema: convert(xSchema),
+        'x-schema': xSchema
       }
+    }
+    let bodyParameters = body ? [
+      parseBody()
+    ] : []
 
-      let properties = {}
-
-      schema.required = []
-      if (item.type === 'array') {
-        schema.items = { type: 'object', properties }
-      } else {
-        schema.properties = properties
-      }
-
-      item.props.forEach(key => {
-        required.indexOf(key) !== -1 && schema.required.push(key)
-
-        let schema = props[key]
-        isError(!schema, 'Can\'t find ' + key + ' parameter in ' + apiName + '\'s properties.')
-        properties[key] = schema
-      })
-
-      !schema.required.length && delete schema.required
-      return parameter
-    })
 
     return queryParameters.concat(paramParameters).concat(bodyParameters)
   }
@@ -256,9 +256,8 @@ class Builder {
 
         isError(regionProps[key], 'The key ' + key + 'has defined in region model.')
 
-        if (emt.constructor.name === 'Schema') {
-          emt.required && delete emt.required
-          refProps[key] = emt
+        if (emt.isJoi) {
+          refProps[key] = this.parseProperties({ [key]: emt }).properties[key]
           continue
         }
 

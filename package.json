@@ -12,9 +12,11 @@
   },
   "keywords": [
     "node.js",
-    "doc",
+    "swagger doc",
     "swagger.js",
-    "docorator"
+    "docorator swagger doc",
+    "joi",
+    "swagger api validate"
   ],
   "author": "liuJD",
   "license": "ISC",
@@ -23,12 +25,9 @@
     "url": "git+https://github.com/realywithoutname/decorator-doc"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
     "config": "^1.26.2",
-    "koa-static": "^4.0.1",
-    "merge": "^1.2.0",
-    "require-dir": "^0.3.2",
-    "swagger-parser": "^3.4.2",
-    "swagger-ui": "^3.1.6"
+    "joi-to-json-schema": "^3.0.0",
+    "lodash": "^4.17.4",
+    "require-dir": "^0.3.2"
   }
 }

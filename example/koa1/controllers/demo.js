@@ -1,16 +1,18 @@
-const { model, info, router } = require('../../../src')
+const { model, router } = require('../../../src')
+const Joi = require('joi')
 @model('Demo model')
 @model.props({
-  id: info.integer().desc('Demo Id').required(),
-  name: info.string().desc('Demo name').required(),
-  createTime: info.dateTime().desc('Demo create time')
+  id: Joi.number().integer().description('Demo Id').required(),
+  name: Joi.string().description('Demo name').required(),
+  createTime: Joi.date().description('Demo create time')
 })
 class Demo {
   @router('Demo find')
   @router.get('/Demos')
+  @router.required(['id'])
   @router.response.array()
-  find(req, res) {
-    return [{ id: 0 }]
+  async find(ctx) {
+    ctx.body = [{ id: 0 }]
   }
 
   @router('Update Demo document by id')
@@ -21,8 +23,9 @@ class Demo {
     props: ['id', 'name']
   }])
   @router.response(['id'])
-  update() {
-
+  update (ctx) {
+    console.log(ctx.request.body, 2)
+    ctx.body = []
   }
 }
 

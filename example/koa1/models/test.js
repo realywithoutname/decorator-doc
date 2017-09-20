@@ -1,14 +1,14 @@
-const { info } = require('../../../src')
+const Joi = require('joi')
 module.exports = {
   name: 'Test',
   description: 'Test Model',
   properties: {
-    id: info.integer().desc('test id').required(),
-    prop1: info.string().desc('test property one'),
-    prop2: info.string().desc('test property two'),
-    prop3: info.string().desc('test property three'),
-    prop4: info.string().desc('test property four'),
-    created: info.dateTime().desc('test property four')
+    id: Joi.number().integer().description('test id').required(),
+    prop1: Joi.string().description('test property one'),
+    prop2: Joi.string().description('test property two'),
+    prop3: Joi.string().description('test property three'),
+    prop4: Joi.string().description('test property four'),
+    created: Joi.date().iso().description('test property four')
   },
   apis: {
     find: {

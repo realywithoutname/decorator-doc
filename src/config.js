@@ -17,12 +17,12 @@ function generateHandles(apis, controller, fileName) {
   if (_.isFunction(controller)) {
     controller = new controller
   }
-  Object.keys(apis).forEach(action => {
-    let { method, path } = apis[action]
+  Object.keys(apis).forEach(target => {
+    let { method, path } = apis[target]
 
-    isError((controller[action] && !_.isFunction(controller[action]) || !controller[action]), 'Can not find action ' + action + ' at ' + fileName)
+    isError((controller[target] && !_.isFunction(controller[target]) || !controller[target]), 'Can not find action ' + target + ' at ' + fileName)
 
-    routes[path] = { method, action: controller[action] }
+    routes[path] = { method, controller, target: target}
   })
 }
 

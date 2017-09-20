@@ -19,11 +19,12 @@ function router(arg) {
   return setValue(arg)
 }
 
-function setValue(arg) {
+function setValue(arg, cb) {
   isError(!_.isPlainObject(arg), 'First argument must be object')
 
   return (target, key, descritor) => {
     merge(target.constructor, `swagger$$schema.apis.${key}`, arg)
+    cb && cb(target, key, descritor)
   }
 }
 
@@ -60,7 +61,11 @@ router.join = function (refModelName, props) {
 }
 
 router.body = function (props = []) {
-  return setValue({ body: props })
+  return setValue({ body: { type: 'object', props } })
+}
+
+router.body.array = function (props = []) {
+  return setValue({ body: { type: 'array', props } })
 }
 
 router.required = function (props) {
