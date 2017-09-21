@@ -121,7 +121,7 @@
 ### RUN
 在你的项目中使用它
 
-如果使用ES7 decorator语法，你还需要安装Babel插件。使用JavaScript对象定义请参照[这里](/docs/config.md)
+如果使用ES7 decorator语法，你还需要安装Babel插件。
 ~~~
   $ babel-plugin-transform-decorators-legacy
 ~~~
