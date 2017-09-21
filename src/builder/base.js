@@ -38,6 +38,7 @@ class Builder {
       let schema = convert(Object.assign({}, prop))
       schema['x-schema'] = prop.optional()
       properties[key] = schema
+      Object.defineProperty(schema, 'x-schema', {value: prop.optional(), enumerable: false})
       delete prop.required
     })
 
@@ -145,10 +146,10 @@ class Builder {
           name,
           schema,
           in: _in,
-          'x-schema': schema['x-schema'],
           description: schema.description,
           required: _required ? _required : required.indexOf(name) !== -1
         }
+        Object.defineProperty(parameter, 'x-schema', { value: schema['x-schema'], enumerable: false })
         return parameter
       }
     }
@@ -177,12 +178,13 @@ class Builder {
       }
 
       let xSchema = parseObject(body)
-      return {
+      let parameter = {
         in: 'body',
         name: 'body',
-        schema: convert(xSchema),
-        'x-schema': xSchema
+        schema: convert(xSchema)
       }
+      Object.defineProperty(parameter, 'x-schema', { value: xSchema, enumerable: false })
+      return parameter
     }
     let bodyParameters = body ? [
       parseBody()

@@ -2,9 +2,11 @@ const model = require('./model')
 const router = require('./router')
 const get = require('./config')
 const path = require('path')
+const {isError, isKoa} = require('./helper')
 const serverStatic = require('./static')
 const validate = require('./validate')
 let instance = null
+let _config = {}
 /**
  *
  * @param {Object} config 自定义信息
@@ -14,7 +16,6 @@ let instance = null
  * config.pkgconf package.json文件地址或者配置对象
  * config.models 配置的model集合，额外不需要控制器的Model和未使用修饰器语法的项目的Model,如果Model定义了apis属性，则会在controller目录下找同名的controller文件。默认为项目下的models文件夹
  * config.controllers 控制器文件所在文件夹。默认为项目下的controllers文件夹
- * config.router 应用框架所使用的路由组件
  */
 function generator(config = {}) {
   if (instance) {
@@ -22,36 +23,36 @@ function generator(config = {}) {
   }
   config.use = config.use || 2
   config.root = config.root || process.cwd()
-  config = get(config)
+  _config = config = get(config)
 
   const Builder = require('./builder/v' + config.use)
 
   instance = new Builder(config)
 
-  let router = config.router
-  let routes = config.routes
-  // 如果有router参数，则自动配置路由
-  if (router) {
+  return instance
+}
+generator.autoRoute = function (router) {
 
-    router.get('/swagger-ui/docs', function () {
-      if (arguments.length === 3) {
-        return arguments[1].send(instance)
-      }
+  isError(!router, 'router parameter miss.')
 
+  let routes = _config.routes
+  router.get('/swagger-ui/docs', function () {
+    if (isKoa(this, arguments)) {
       let self = this === global ? arguments[0] : this
       self.body = instance
-    })
+    } else {
+      arguments[1].send(instance)
+    }
+  })
 
-    router.get('/swagger-ui*', serverStatic(path.join(__dirname, '../')))
-    Object.keys(routes).forEach(url => {
-      let {method, controller, target} = routes[url]
-      let swagger = instance.paths[url][method]
-      url = path.join(config.basePath + '/' + url).replace(/\{\s*(\w+)?\s*\}/g, ($1, $2) => ':' + $2).replace(/\\/g, '/')
-      router[method](url, validate(swagger, controller))
-    })
-  }
+  router.get('/swagger-ui*', serverStatic(path.join(__dirname, '../')))
 
-  return instance
+  Object.keys(routes).forEach(url => {
+    let { method, controller, target } = routes[url]
+    let swagger = instance.paths[url][method]
+    url = path.join(_config.basePath + '/' + url).replace(/\{\s*(\w+)?\s*\}/g, ($1, $2) => ':' + $2).replace(/\\/g, '/')
+    router[method](url, validate(swagger, controller))
+  })
 }
 
 generator.model = model

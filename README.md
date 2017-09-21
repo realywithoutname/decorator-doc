@@ -2,41 +2,186 @@
 
 ## INTRODUCTION
 
-一个[swagger](https://swagger.io)文档生成工具，以极简单的方式配置可视化，可测试的API文档。
+一个[swagger](https://swagger.io)文档生成及验证接口调用的工具，以极简单的方式配置可视化，可测试的API文档。
 
 支持两种配置方式：使用ES7 decorator或使用普通JavaScript对象。
 
 ## USE IT
+你可以直接参考[示例](/example)学习使用这个工具。下面进行简单介绍如何使用。
 
-你可参考快速[使用](/docs/start.md)文档以及[示例](/example)学习使用这个工具。
+### INSTALL
+在你的项目中安装它
+~~~
+  $ npm i decorator-doc --save
+~~~
 
-## API DOC
-- [config](/docs/config.md)
-- [model](/docs/model.md)
-- [router](/docs/router.md)
-- [info](/docs/info.md)
-- [schema](/doc/schema.md)`废弃`
-> 原Schema的所有功能已使用[Joi](https://github.com/hapijs/joi)替代，使用方法请查看[Joi文档](https://github.com/hapijs/joi/blob/v11.0.2/API.md)
+### IMPORTANT FOLDER
+- controllers `required` 这个文件夹定义Model和API（使用ES7 decorator语法时）以及处理程序。
+- config `required` 这个文件夹下定义服务器配置信息。
+- models `optional` 这个文件夹定义一些Model，如果使用JSON方式配置API和Model信息，则必须有该文件夹。
+
+> 具体请查看[文档](/API.md#swdobject-config)中要求。
+
+### EXAMPLE
+- USE DECORATOR
+~~~ javascript
+  // controllers/example.js
+  @model('Example Model')
+  @model.props({
+    id: Joi.number().description('Example id'),
+    name: Joi.string().description('Example name')
+  })
+
+  class Example () {
+    @router('Find example list')
+    @router.get('/examples')
+    @router.join('Page', ['size', 'index', 'count'])
+    @router.response([{
+      type: 'array',
+      name: 'data',
+      props: ['id', 'name']
+    }, {
+      type: 'object',
+      name: 'pageInfo',
+      props: ['size', 'index', 'count']
+    }])
+    async find (ctx) {
+      ctx.body = {
+        data: [{
+          id: 1,
+          name: 'Example 1'
+        }],
+        pageInfo: {
+          page: 1,
+          size: 10,
+          count: 1
+        }
+      }
+    }
+  }
+
+  module.exports = Example
+~~~
+> 需要注意的是在使用ES7 decorator语法定义的controller中，每个controller都会被添加一个名为`swagger$$schema`的静态属性，他表示当前controller的Model。
+
+- USE JSON
+
+~~~ javascript
+  // models/example.js
+  model.exports = {
+    name: 'Example',
+    description: 'Example Model',
+    properties: {
+      id: Joi.number().description('Example id'),
+      name: Joi.string().description('Example name')
+    },
+    apis: {
+      find: {
+        method: 'GET',
+        path: '/examples',
+        refs: {
+          size: {key: 'size', model: 'Page'},
+          index: {key: 'index', model: 'Page'},
+          count: {key: 'count', model: 'Page'}
+        },
+        response: {
+          type: 'object',
+          props: [{
+            type: 'array',
+            name: 'data',
+            props: ['id', 'name']
+          }, {
+            type: 'object',
+            name: 'pageInfo',
+            props: ['size', 'index', 'count']
+          }]
+        }
+      }
+    }
+  }
+  // controllers/example.js
+  class Example () {
+    async find (ctx) {
+      ctx.body = {
+        data: [{
+          id: 1,
+          name: 'Example 1'
+        }],
+        pageInfo: {
+          page: 1,
+          size: 10,
+          count: 1
+        }
+      }
+    }
+  }
+
+  module.exports = Example
+~~~
+### RUN
+在你的项目中使用它
+
+如果使用ES7 decorator语法，你还需要安装Babel插件。使用JavaScript对象定义请参照[这里](/docs/config.md)
+~~~
+  $ babel-plugin-transform-decorators-legacy
+~~~
+
+并在.babelrc中添加这个插件
+
+~~~
+{
+  "plugins": ["transform-decorators-legacy"]
+}
+~~~
+
+### BEAUTY
+
+如果你想让decorator语法高亮不一样，你可以试试在你打开的vscode中添加一个`.vscode/settings.json`（也可以使用设置面板），复制下面信息，可以修改为你想要高亮颜色
+~~~ json
+  {
+    "editor.tokenColorCustomizations": {
+      "textMateRules": [
+        {
+          "scope": "keyword.operator.decorator.js",
+          "settings": {
+            "foreground": "#ff0000"
+          }
+        },
+        {
+          "name": "class.decorator",
+          "scope": "variable.other.readwrite.decorator.js",
+          "settings": {
+            "foreground": "#89898560"
+          }
+        },
+        {
+          "name": "class.decorator.property",
+          "scope": "variable.other.property.decorator.js",
+          "settings": {
+            "foreground": "#89898560"
+          }
+        }
+      ]
+    }
+  }
+~~~
+
+如果你使用了代码检测，那么decorator语法可能会显示错误哦，记得在项目中配置`jsconfig.json`
+~~~ json
+  {
+    "compilerOptions": {
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
+    }
+  }
+~~~
+## API
+点击查看[API文档](/API.md)
 
 ## FEATURE
 
 [这里](/docs/feature.md)查看
 
-## IMPORTANT CHANGE LOG
 
-- [commit cf473c8c85b1fd06df662011a7074b5326aaaef1](/commit/cf473c8c85b1fd06df662011a7074b5326aaaef1)
-  - 支持Swagger 2.0(`验证通过`)和Swagger 3.0(未验证)文档生成
 
-- [commit cb9f1a16ba4c8cca8ad7be2a7768a058adbcb893](/commit/cb9f1a16ba4c8cca8ad7be2a7768a058adbcb893)
-  - 修复删除`src/meta.js`的bug
-  - 新增[info](/docs/info.md)API
-  - 修改[schema](/docs/schema.md)对象
 
-- [commit 335da731f461e0732dfb4e8c71fb7aa7dd6890ec](/commit/335da731f461e0732dfb4e8c71fb7aa7dd6890ec)
-  - 支持多种框架，通过`express`,`koa 1.x`,`koa 2.x`
-  - `koa 1.x`中controller中同时使用`Generator`和`Decorator`会出错，待解决。
-
-- [commit 37bc6eda17025ee2ebb71d3cd21def3e60c53097](/commit/37bc6eda17025ee2ebb71d3cd21def3e60c53097)
-  - 支持接口验证，不包括返回数据验证。
-  - 删除Schema相关接口。（示例未同步）
-  - 添加router.body.array方法，具体请查看[文档](/docs/router.md)

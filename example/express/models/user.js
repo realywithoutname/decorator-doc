@@ -2,6 +2,7 @@ const Joi = require('joi')
 module.exports = {
   name: 'User',
   description: 'User Model',
+  additional: true,
   properties: {
     id: Joi.number().integer().description('User id'),
     name: Joi.string(),

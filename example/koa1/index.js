@@ -7,7 +7,12 @@ const docGenerator = require('../../src')
 let app = koa()
 
 app.use(parser())
-docGenerator({ router })
+
+let doc = docGenerator()
+
 app.use(router.routes())
+
+docGenerator.autoRoute(router)
+
 const { host, port } = config.get('server')
 app.listen(port, () => console.log('open http://' + host + ':' + port))

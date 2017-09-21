@@ -24,4 +24,9 @@ model.props = function (props) {
   }
 }
 
+model.isAdditional = function (bool = true) {
+  return (target) => {
+    merge(target, 'swagger$$schema.additional', bool)
+  }
+}
 module.exports = model
