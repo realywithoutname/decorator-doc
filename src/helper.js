@@ -55,8 +55,20 @@ module.exports.merge = function (source, target, val) {
   return _.get(source, target)
 }
 
+function BuilderDocError (message) {
+  this.message = message
+  this.name = 'BuilderDocError'
+}
+
+BuilderDocError.prototype = new Error
+BuilderDocError.prototype.constructor = BuilderDocError
+
 module.exports.isError = function (expression, message) {
-  if (expression) throw new Error(message)
+  if (expression)
+    if (message instanceof Error)
+      throw message
+    else
+      throw new BuilderDocError(message)
 }
 
 module.exports.isWarning = function (expression, message) {

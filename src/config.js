@@ -70,13 +70,16 @@ module.exports = function (conf) {
     Object.keys(controllers).forEach(key => {
       let controller = controllers[key]
       // 普通控制器
-      if (!controller.swagger$$schema) return
+      if (!controller.swagger$$schema) {
+        isError(_.isEmpty(controller), 'The controller ' + key + ' may export some action.')
+        return
+      }
       generateHandles(controller.swagger$$schema.apis, controller, path.join(ctrPath, key + '.js'))
     })
 
     conf.controllers = controllers
   } catch (e) {
-    isError(true, e.message + '\nTry get controllers from ' + ctrPath + ' but failed. Please set controllers path to config')
+    isError(true, e)
   }
 
   // 加载定义的额外Model

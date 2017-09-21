@@ -2,6 +2,9 @@ const { isError, isKoa } = require('./helper')
 const co = require('co')
 const Joi = require('joi')
 module.exports = function (schema, controller) {
+  let action = controller[schema.operationId]
+  let parameters = schema.parameters
+
   return function () {
     let _isKoa = isKoa(this, arguments)
     let ctx = this === global ? arguments[0] : this
@@ -12,7 +15,6 @@ module.exports = function (schema, controller) {
       req = arguments[0]
       res = arguments[1]
     }
-    let parameters = schema.parameters
     let query = req.query
     let path = req.params || ctx.params
     let body = req.body
@@ -24,6 +26,9 @@ module.exports = function (schema, controller) {
       let result = Joi.validate(value, schema)
       isError(result.error, `Field [${name}] ${result.error}.`)
     }
-    _isKoa ? controller[schema.operationId].apply(controller, [ctx]) : controller[schema.operationId].apply(controller, arguments)
+
+    return co.wrap(action)
+      .apply(controller, _isKoa ? [ctx] : arguments)
+      .catch((err) => console.log(err))
   }
 }
