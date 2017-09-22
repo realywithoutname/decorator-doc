@@ -6,7 +6,9 @@ const docGenerator = require('../../src')
 let app = new Koa()
 let router = new Router()
 
-docGenerator({ router })
+docGenerator()
+docGenerator.autoRoute(router)
+
 app.use(router.routes())
 
 const { host, port } = config.get('server')

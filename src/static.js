@@ -16,6 +16,7 @@ module.exports = function (root) {
     let reqError = function (e) {
       res.statusCode = 500
       res.end(e.message)
+      _isKoa ? ctx.throw(500, e.message) : res.status(500).send(e.message)
     }
 
     let fileStats = function (path) {
