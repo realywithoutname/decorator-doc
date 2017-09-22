@@ -1,6 +1,6 @@
 {
   "name": "decorator-doc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A swagger doc generator with decorator syntax for node.js,It surport use a js object define too.",
   "main": "src/index.js",
   "directories": {
