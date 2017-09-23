@@ -12,7 +12,7 @@ const routes = {}
  * 生成中间件
  * @param {Object} controllers controller集合
  */
-function generateHandles(apis, controller, fileName) {
+function generateHandles(apis = {}, controller, fileName) {
   // 如果controller文件export一个function或者class，则先实例化该controller
   if (_.isFunction(controller)) {
     controller = new controller

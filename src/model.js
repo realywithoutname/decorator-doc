@@ -5,7 +5,7 @@ const { isError, merge } = require('./helper')
 let model = function (description, name) {
   return (target) => {
     let schema = target.swagger$$schema
-    schema.name = _.capitalize(name || target.name)
+    schema.name = name || target.name
     schema.description = description
 
     isError(!schema.name, 'A model without name.')

@@ -29,6 +29,10 @@ function generator(config = {}) {
 
   instance = new Builder(config)
 
+  Object.defineProperty(instance, 'autoRoute', {
+    value: generator.autoRoute,
+    enumerable: false
+  })
   return instance
 }
 generator.autoRoute = function (router) {

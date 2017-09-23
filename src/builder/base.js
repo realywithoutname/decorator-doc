@@ -49,8 +49,9 @@ class Builder {
     let schemas = this.schemas = {}
     let tags = this.tags = []
 
-    for (let { name, description, properties } of models) {
-      schemas[name] = Object.assign({ type: 'object', description }, this.parseProperties(properties))
+    for (let { name, description, properties, additional = false } of models) {
+      name = _.upperFirst(_.camelCase(name))
+      schemas[name] = Object.assign({ type: 'object', description, 'x-additional': additional }, this.parseProperties(properties))
       tags.push({ name, description })
     }
   }

@@ -25,14 +25,19 @@
 
 # Swd(Object: config)
 - `required` 通过使用该接口生成一个完整的swagger文档。
-  - host 服务器地址，默认127.0.0.1(这个地址必须和浏览器中使用地址同域，否则会出现跨域)
-  - port 监听端口，默认3000
-  - root 项目根目录
-  - basePath API前缀，默认为v+应用版本号
-  - pkgconf package.json文件地址，默认为项目根目录下的package.json
-  - models 配置的model集合，额外不需要控制器的Model和未使用修饰器语法的项目的Model,如果Model定义了apis属性，则会在controller目录下找同名的controller文件
-  - controllers 控制器文件所在文件夹。默认为项目下的controllers文件夹
-  - use 可以是2和3，分别对应swagger 2.0和swagger 3.0
+  - config
+    - host 服务器地址，默认127.0.0.1(这个地址必须和浏览器中使用地址同域，否则会出现跨域)
+    - port 监听端口，默认3000
+    - root 项目根目录
+    - basePath API前缀，默认为v+应用版本号
+    - pkgconf package.json文件地址，默认为项目根目录下的package.json
+    - models 配置的model集合，额外不需要控制器的Model和未使用修饰器语法的项目的Model,如果Model定义了apis属性，则会在controller目录下找同名的controller文件
+    - controllers 控制器文件所在文件夹。默认为项目下的controllers文件夹
+    - use 可以是2和3，分别对应swagger 2.0和swagger 3.0
+  - return
+    - doc swagger.json
+    - [autoRoute](#autorouteobject-router)
+
 > host，port，basePath，pkgconf, controllers， models参数会通过[config](https://github.com/lorenwest/node-config)来获取`server`属性得到，所以可以在应用目录下config目录中定义而不需要在使用时传入。
 
 > 项目根目录 通过`process.cwd()`获取
