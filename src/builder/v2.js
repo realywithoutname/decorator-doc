@@ -45,6 +45,7 @@ class Builder extends BaseBuilder {
 
       if (param.in !== 'body') {
         _param = Object.assign({}, param.schema, param)
+        Object.defineProperty(_param, 'x-schema', { value: param['x-schema'], enumerable: false})
         delete _param.schema
       } else {
         delete param.schema['x-schema']

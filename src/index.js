@@ -52,9 +52,11 @@ generator.autoRoute = function (router) {
   router.get('/swagger-ui*', serverStatic(path.join(__dirname, '../')))
 
   Object.keys(routes).forEach(url => {
-    let { method, controller, target } = routes[url]
-    let swagger = instance.paths[url][method]
+    const { method, controller, target } = routes[url]
+    const swagger = instance.paths[url][method]
+    const definition = instance.definitions[swagger.tags[0]]
     url = path.join(_config.basePath + '/' + url).replace(/\{\s*(\w+)?\s*\}/g, ($1, $2) => ':' + $2).replace(/\\/g, '/')
+    controller.schema = validate.schemaValidate(definition)
     router[method](url, validate(swagger, controller))
   })
 }

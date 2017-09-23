@@ -34,9 +34,8 @@ class Builder {
 
     Object.keys(properties).forEach(key => {
       let prop = properties[key]
-      prop.required && required.push(key)
+      prop._flags.presence && prop._flags.presence === 'required' && required.push(key)
       let schema = convert(Object.assign({}, prop))
-      schema['x-schema'] = prop.optional()
       properties[key] = schema
       Object.defineProperty(schema, 'x-schema', {value: prop.optional(), enumerable: false})
       delete prop.required
@@ -142,7 +141,6 @@ class Builder {
         let schema = props[name]
 
         isError(!schema, 'Can\'t find ' + name + ' parameter in ' + apiName + '\'s properties.')
-
         let parameter = {
           name,
           schema,

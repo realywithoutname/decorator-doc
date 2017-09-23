@@ -123,7 +123,7 @@
 
 如果使用ES7 decorator语法，你还需要安装Babel插件。
 ~~~
-  $ babel-plugin-transform-decorators-legacy
+  $ npm i babel-plugin-transform-decorators-legacy --save-dev
 ~~~
 
 并在.babelrc中添加这个插件
@@ -178,6 +178,24 @@
 ## API
 点击查看[API文档](/API.md)
 
+## AVLIDATE
+- 请求中验证
+  如果使用了[`autoRoute`](/API.md#autorouteobject-router)方法将自动验证。
+
+- 写入数据库严重
+  该步骤使用写入数据与定义的Model验证，如果需要可以使用`joi.validate`方法验证，`schema`为当前`controller`实例的`schema`属性。
+  ~~~ JavaScript
+    class Model {
+      ...
+      validate (data) {
+        let ret = Joi.validate(data, this.schema)
+        if (ret.error) {
+          throw ret.error
+        }
+      }
+      ...
+    }
+  ~~~
 ## FEATURE
 
 [这里](/docs/feature.md)查看

@@ -26,9 +26,26 @@ module.exports = function (schema, controller) {
       let result = Joi.validate(value, schema)
       isError(result.error, `Field [${name}] ${result.error}.`)
     }
-
     return co.wrap(action)
       .apply(controller, _isKoa ? [ctx] : arguments)
       .catch((err) => console.log(err))
+  }
+}
+
+module.exports.schemaValidate = function (definition) {
+  if (definition) {
+    let required = definition.required || []
+    let properties = definition.properties
+
+    return Joi.object().keys(
+      Object.keys(properties).reduce((ret, key) => {
+        ret[key] = properties[key]['x-schema'].clone()
+
+        if (required.indexOf(key) !== -1)
+          ret[key] = ret[key].required()
+
+        return ret
+      }, {})
+    )
   }
 }
