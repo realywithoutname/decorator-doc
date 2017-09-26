@@ -9,6 +9,9 @@
 ## USE IT
 你可以直接参考[示例](/example)学习使用这个工具。下面进行简单介绍如何使用。
 
+## NOTE
+Model的命名必须符合`_.upperFirst(_.camelCase(name))`,否则也会被转换为这样的模式。
+
 ### INSTALL
 在你的项目中安装它
 ~~~
@@ -138,32 +141,62 @@
 
 如果你想让decorator语法高亮不一样，你可以试试在你打开的vscode中添加一个`.vscode/settings.json`（也可以使用设置面板），复制下面信息，可以修改为你想要高亮颜色
 ~~~ json
-  {
-    "editor.tokenColorCustomizations": {
-      "textMateRules": [
-        {
-          "scope": "keyword.operator.decorator.js",
-          "settings": {
-            "foreground": "#ff0000"
-          }
+{
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword.operator.decorator.js",
+        "settings": {
+          "foreground": "#5c6370ff"
         },
-        {
-          "name": "class.decorator",
-          "scope": "variable.other.readwrite.decorator.js",
-          "settings": {
-            "foreground": "#89898560"
-          }
-        },
-        {
-          "name": "class.decorator.property",
-          "scope": "variable.other.property.decorator.js",
-          "settings": {
-            "foreground": "#89898560"
-          }
+        "comment": "@符号颜色"
+      },
+      {
+        "name": "class.decorator",
+        "scope": [
+          "variable.other.readwrite.decorator.js",
+          "variable.other.property.decorator.js"
+        ],
+        "comment": "函数部分",
+        "settings": {
+          "foreground": "#5c6370ff"
         }
-      ]
-    }
+      },
+      {
+        "name": "class.body",
+        "scope": [
+        "meta.class.body.js string.quoted.single.js",
+          "meta.class.body.js constant.other.object.key.js",
+          "meta.class.body.js string.unquoted.js"
+        ],
+        "comment": "函数部分参数对象",
+        "settings": {
+          "foreground": "#478D3C"
+        }
+      },
+      {
+        "name": "function.body",
+        "scope": [
+        "meta.function.method.js string.quoted.single.js",
+          "meta.function.method.js constant.other.object.key.js",
+          "meta.function.method.js string.unquoted.js"
+        ],
+        "comment": "覆盖上面的在class 方法里面的影响",
+        "settings": {
+          "foreground": "#98c379ff"
+        }
+      },
+      {
+        "name": "function.separator",
+        "scope": "meta.function.method.js punctuation.separator.key-value.js",
+        "comment": "覆盖上面的在class 方法里面的影响",
+        "settings": {
+          "foreground": "56b6c2ff"
+        }
+      }
+    ]
   }
+}
 ~~~
 
 如果你使用了代码检测，那么decorator语法可能会显示错误哦，记得在项目中配置`jsconfig.json`
