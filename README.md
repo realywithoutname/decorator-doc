@@ -9,6 +9,9 @@
 ## USE IT
 你可以直接参考[示例](/example)学习使用这个工具。下面进行简单介绍如何使用。
 
+## NOTE
+Model的命名必须符合`_.upperFirst(_.camelCase(name))`,否则也会被转换为这样的模式。
+
 ### INSTALL
 在你的项目中安装它
 ~~~
