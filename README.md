@@ -142,20 +142,20 @@
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
-        // @符号
         "scope": "keyword.operator.decorator.js",
         "settings": {
           "foreground": "#5c6370ff"
-        }
-      },
+        },
+        "comment": "@符号颜色"
+      },
       {
         "name": "class.decorator",
         "scope": [
-          // 函数部分
           "variable.other.readwrite.decorator.js",
           "variable.other.property.decorator.js"
 
         ],
+        "comment": "函数部分",
         "settings": {
           "foreground": "#5c6370ff"
         }
@@ -163,11 +163,11 @@
       {
         "name": "class.body",
         "scope": [
-          // 函数部分参数对象
           "meta.class.body.js string.quoted.single.js",
           "meta.class.body.js constant.other.object.key.js",
           "meta.class.body.js string.unquoted.js"
         ],
+        "comment": "函数部分参数对象",
         "settings": {
           "foreground": "#478D3C"
         }
@@ -175,19 +175,19 @@
       {
         "name": "function.body",
         "scope": [
-          // 覆盖上面的在class 方法里面的影响
           "meta.function.method.js string.quoted.single.js",
           "meta.function.method.js constant.other.object.key.js",
           "meta.function.method.js string.unquoted.js"
         ],
+        "comment": "覆盖上面的在class 方法里面的影响",
         "settings": {
           "foreground": "#98c379ff"
         }
       },
       {
         "name": "function.separator",
-        // 覆盖上面的在class 方法里面的影响
         "scope": "meta.function.method.js punctuation.separator.key-value.js",
+        "comment": "覆盖上面的在class 方法里面的影响",
         "settings": {
           "foreground": "56b6c2ff"
         }
