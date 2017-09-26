@@ -138,22 +138,21 @@
 
 如果你想让decorator语法高亮不一样，你可以试试在你打开的vscode中添加一个`.vscode/settings.json`（也可以使用设置面板），复制下面信息，可以修改为你想要高亮颜色
 ~~~ json
-  {
+{
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
-        "scope": "keyword.operator.decorator.js",
+        "scope": "keyword.operator.decorator.js",
         "settings": {
           "foreground": "#5c6370ff"
-        },
-        "comment": "@符号颜色"
-      },
+        },
+        "comment": "@符号颜色"
+      },
       {
         "name": "class.decorator",
         "scope": [
-          "variable.other.readwrite.decorator.js",
+          "variable.other.readwrite.decorator.js",
           "variable.other.property.decorator.js"
-
         ],
         "comment": "函数部分",
         "settings": {
@@ -163,7 +162,7 @@
       {
         "name": "class.body",
         "scope": [
-          "meta.class.body.js string.quoted.single.js",
+        "meta.class.body.js string.quoted.single.js",
           "meta.class.body.js constant.other.object.key.js",
           "meta.class.body.js string.unquoted.js"
         ],
@@ -175,7 +174,7 @@
       {
         "name": "function.body",
         "scope": [
-          "meta.function.method.js string.quoted.single.js",
+        "meta.function.method.js string.quoted.single.js",
           "meta.function.method.js constant.other.object.key.js",
           "meta.function.method.js string.unquoted.js"
         ],
@@ -195,7 +194,6 @@
     ]
   }
 }
-
 ~~~
 
 如果你使用了代码检测，那么decorator语法可能会显示错误哦，记得在项目中配置`jsconfig.json`
