@@ -22,7 +22,8 @@ function generateHandles(apis = {}, controller, fileName) {
 
     isError((controller[target] && !_.isFunction(controller[target]) || !controller[target]), 'Can not find action ' + target + ' at ' + fileName)
 
-    routes[path] = { method, controller, target: target}
+    let paths = routes[path] = routes[path] || []
+    paths.push({ method, controller, target: target })
   })
 }
 
