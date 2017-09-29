@@ -19,13 +19,19 @@ module.exports = function (schema, controller) {
     let path = req.params || ctx.params
     let body = req.body
     let data = { query, path, body }
-    for (let i = 0; i < parameters.length; i++) {
-      let { 'x-schema': schema, 'in': _in, name, required} = parameters[i]
-      let value = _in === 'body' ? data[_in] : data[_in][name]
-      schema = required ? schema.required() : schema
-      let result = Joi.validate(value, schema)
-      isError(result.error, `Field [${name}] ${result.error}.`)
+    try {
+      for (let i = 0; i < parameters.length; i++) {
+        let { 'x-schema': schema, 'in': _in, name, required} = parameters[i]
+        let value = _in === 'body' ? data[_in] : data[_in][name]
+        schema = required ? schema.required() : schema
+        let result = Joi.validate(value, schema)
+        isError(result.error, `Field [${name}] ${result.error}.`)
+      }
+    } catch (e) {
+      if (_isKoa) ctx.throw(400, e)
+      else res.status(400).send(e)
     }
+
     return co.wrap(action)
       .apply(controller, _isKoa ? [ctx] : arguments)
       .catch((err) => console.log(err))
