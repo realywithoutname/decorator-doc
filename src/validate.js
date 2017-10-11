@@ -40,7 +40,6 @@ module.exports.schemaValidate = function (definition) {
   if (definition) {
     let required = definition.required || []
     let properties = definition.properties
-
     return Joi.object().keys(
       Object.keys(properties).reduce((ret, key) => {
         ret[key] = properties[key]['x-schema'].clone()

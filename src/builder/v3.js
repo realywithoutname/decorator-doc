@@ -7,6 +7,7 @@ class Builder extends BaseBuilder {
     this.server(conf.host, conf.port, conf.basePath)
     this.components = {}
     this.components.schemas = this.schemas
+    this.openapi = '3.0'
     delete this.schemas
   }
   server(host, port, basePath) {

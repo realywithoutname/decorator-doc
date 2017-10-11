@@ -55,10 +55,9 @@ generator.autoRoute = function (router) {
     const paths = routes[url]
 
     const fullpath = path.join(_config.basePath + '/' + url).replace(/\{\s*(\w+)?\s*\}/g, ($1, $2) => ':' + $2).replace(/\\/g, '/')
-
     paths.forEach(({ method, controller, target }) => {
       const swagger = instance.paths[url][method]
-      const definition = instance.definitions[swagger.tags[0]]
+      const definition = +_config.use === 2 ? instance.definitions[swagger.tags[0]] : instance.components.schemas[swagger.tags[0]]
 
       controller.schema = validate.schemaValidate(definition)
       router[method](fullpath, validate(swagger, controller))
