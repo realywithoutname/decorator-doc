@@ -164,7 +164,11 @@ class Builder {
         let itemSchema = Joi.object().keys()
 
         item.props.forEach((item, index) => {
-          if (_.isString(item)) return itemSchema = itemSchema.keys({ [item]: props[item]['x-schema'] })
+          if (_.isString(item)) {
+            let schema = props[item]['x-schema'].clone()
+            schema = required.indexOf(item) !== -1 ? schema.required() : schema
+            return itemSchema = itemSchema.keys({ [item]: schema })
+          }
           itemSchema = parseObject(item, index, itemSchema)
         })
 

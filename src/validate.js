@@ -31,10 +31,8 @@ module.exports = function (schema, controller) {
       if (_isKoa) ctx.throw(400, e)
       else res.status(400).send(e)
     }
-
     return co.wrap(action)
       .apply(controller, _isKoa ? [ctx] : arguments)
-      .catch((err) => console.log(err))
   }
 }
 
